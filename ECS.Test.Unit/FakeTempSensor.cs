@@ -8,14 +8,25 @@ namespace ECS.Test.Unit
 {
     class FakeTempSensor:ITempSensor
     {
+        private int temp_
+        { set;
+          get;
+        }
+
+        private bool selfTestResult_
+        {
+            set;
+            get;
+        }
+
         public int GetTemp()
         {
-            return 22;
+            return temp_;
         }
 
         public bool RunSelfTest()
         {
-            return true;
+            return selfTestResult_;
         }
     }
 }
