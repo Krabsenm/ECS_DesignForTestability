@@ -14,11 +14,12 @@ namespace ECS.Test.Unit
         private ECS UUT;
         private FakeTempSensor tempSensor = new FakeTempSensor();
         private FakeHeater heater = new FakeHeater();
+        private FakeWindow window = new FakeWindow();
 
         [SetUp]
         public void SetUp()
         {
-            UUT = new ECS(25, tempSensor, heater);
+            UUT = new ECS(25, tempSensor, heater, window);
         }
 
         [Test]
@@ -67,14 +68,16 @@ namespace ECS.Test.Unit
             Assert.That(UUT.GetCurTemp(), Is.EqualTo(15));
         }
 
-        [TestCase(true, true, true)]
-        [TestCase(true, false, false)]
-        [TestCase(false, true, false)]
-        [TestCase(false, false, false)]
-        public void RunSelfTestTests(bool tempSensorStatus, bool heaterStatus, bool expectedValue)
+        [TestCase(true, true, true, true)]
+        [TestCase(false, true, true, false)]
+        [TestCase(true, false, true, false)]
+        [TestCase(true, true, false, false)]
+        [TestCase(false, false, false, false)]
+        public void RunSelfTestTests(bool tempSensorStatus, bool heaterStatus, bool windowStatus, bool expectedValue)
         {
             tempSensor.selfTestResult = tempSensorStatus;
             heater.selfTestResult = heaterStatus;
+            window.SelfTestResult = windowStatus;
 
             var result = UUT.RunSelfTest();
 
@@ -84,5 +87,28 @@ namespace ECS.Test.Unit
                 Assert.That(result, Is.False);
         }
 
+        [Test]
+        public void RegulateTest_TempOverThreshold_WindowIsOpen()
+        {
+            tempSensor.temp_ = 26;
+            UUT.Regulate();
+            Assert.That(window.IsOpen, Is.True);
+        }
+
+        [Test]
+        public void RegulateTest_TempOnThreshold_WindowIsClosed()
+        {
+            tempSensor.temp_ = 25;
+            UUT.Regulate();
+            Assert.That(window.IsOpen, Is.False);
+        }
+
+        [Test]
+        public void RegulateTest_TempUnderThreshold_WindowIsClosed()
+        {
+            tempSensor.temp_ = 24;
+            UUT.Regulate();
+            Assert.That(window.IsOpen, Is.False);
+        }
     }
 }
