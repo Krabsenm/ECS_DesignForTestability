@@ -1,10 +1,10 @@
 ﻿namespace ECS.Legacy
 {
-    public class Heater
+    public class Heater:IHeater
     {
         public void TurnOn()
         {
-            System.Console.WriteLine("Heater is on");
+            System.Console.WriteLine("Heater is on!");
         }
 
         public void TurnOff()
@@ -16,5 +16,9 @@
         {
             return true;
         }
+    }
+
+    public interface IHeater
+    {
     }
 }
