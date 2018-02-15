@@ -16,7 +16,6 @@ namespace ECS.Test.Unit
         public void Ctor_test()
         {
             //assign
-            var uut = new ECS();
 
             //act
 
