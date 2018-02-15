@@ -9,7 +9,7 @@
 
         public void TurnOff()
         {
-            System.Console.WriteLine("Heater is off");
+            System.Console.WriteLine("Heater is off!");
         }
 
         public bool RunSelfTest()
