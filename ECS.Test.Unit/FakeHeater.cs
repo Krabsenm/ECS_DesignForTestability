@@ -3,17 +3,16 @@
     class FakeHeater : IHeater
     {
         private bool _heaterIsOn;
-        private bool _selfTest;
 
-        private bool SelfTest
+        public bool selfTestResult
         {
-            get { return _selfTest; }
-            set { _selfTest = value; }
+            set;
+            get;
         }
 
         public bool RunSelfTest()
         {
-            return _selfTest;
+            return selfTestResult;
         }
 
         public void TurnOff()
