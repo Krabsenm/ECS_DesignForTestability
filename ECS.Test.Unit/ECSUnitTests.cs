@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ECS.Legacy.Test.Unit
+namespace ECS.Test.Unit
 {
     [TestFixture]
     public class ECSUnitTests
     {
+
         [Test]
-        public void ctor_test()
+        public void Ctor_test()
         {
-            var uut = new ECS(1);
+            //assign
+            var uut = new ECS();
 
-            var result = uut.GetThreshold();
+            //act
 
-            Assert.That(result, Is.EqualTo(1));
+            //assert
+
         }
-
-
 
     }
 }
